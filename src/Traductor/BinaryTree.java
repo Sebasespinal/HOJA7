@@ -1,6 +1,6 @@
 package Traductor;
 
-class BinaryTree<E> {
+public class BinaryTree<E extends Comparable<E>> {
     private E data;
     private BinaryTree<E> left;
     private BinaryTree<E> right;
@@ -24,15 +24,42 @@ class BinaryTree<E> {
     }
 
     public void insert(E element) {
-        // Implementación del método de inserción en el árbol binario
+        if (data == null) {
+            data = element;
+        } else {
+            if (element.compareTo(data) < 0) {
+                if (left == null) {
+                    left = new BinaryTree<>(element);
+                } else {
+                    left.insert(element);
+                }
+            } else {
+                if (right == null) {
+                    right = new BinaryTree<>(element);
+                } else {
+                    right.insert(element);
+                }
+            }
+        }
     }
 
-    public boolean search(E element) {
-        // Implementación del método de búsqueda en el árbol binario
-        return false;
+    public String search(E element) {
+        if (data == null || element == null) {
+            return null;
+        }
+
+        int comparison = element.compareTo(data);
+        if (comparison == 0) {
+            return data.toString();
+        } else if (comparison < 0 && left != null) {
+            return left.search(element);
+        } else if (comparison > 0 && right != null) {
+            return right.search(element);
+        } else {
+            return "*" + element.toString() + "*"; // Devolver la palabra original en inglés encerrada entre asteriscos
+        }
     }
 
-    // Método para recorrer el árbol en orden y producir la colección de palabras ordenadas
     public void inOrderTraversal(BinaryTree<E> node) {
         if (node != null) {
             inOrderTraversal(node.getLeft());
@@ -40,4 +67,4 @@ class BinaryTree<E> {
             inOrderTraversal(node.getRight());
         }
     }
-}
+}	

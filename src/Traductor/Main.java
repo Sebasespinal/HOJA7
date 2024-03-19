@@ -1,14 +1,13 @@
 package Traductor;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-
 public class Main {
     public static void main(String[] args) {
-        // Crear un árbol binario para el diccionario Inglés-Español
-        BinaryTree<Association<String, String>> dictionary = new BinaryTree<>(null);
+        BinaryTree<String> dictionary = new BinaryTree<>(null);
 
         // Leer el archivo diccionario.txt y construir el árbol binario
         try (BufferedReader br = new BufferedReader(new FileReader("diccionario.txt"))) {
@@ -17,9 +16,7 @@ public class Main {
                 StringTokenizer tokenizer = new StringTokenizer(line, ",()");
                 String englishWord = tokenizer.nextToken().trim();
                 String spanishWord = tokenizer.nextToken().trim();
-                Association<String, String> association = new Association<>(englishWord, spanishWord);
-                // Insertar la asociación en el árbol binario
-                // dictionary.insert(association);
+                dictionary.insert(englishWord); // Insertar la palabra en inglés en el árbol
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -27,7 +24,8 @@ public class Main {
 
         // Recorrer el árbol en orden y mostrar la colección de palabras ordenadas por inglés
         System.out.print("Palabras ordenadas por inglés: ");
-        // dictionary.inOrderTraversal(dictionary);
+        dictionary.inOrderTraversal(dictionary);
+        System.out.println(); // Agregar salto de línea después de imprimir las palabras ordenadas
 
         // Leer el archivo texto.txt y traducir cada palabra al español
         try (BufferedReader br = new BufferedReader(new FileReader("texto.txt"))) {
@@ -36,12 +34,12 @@ public class Main {
                 StringTokenizer tokenizer = new StringTokenizer(line);
                 while (tokenizer.hasMoreTokens()) {
                     String word = tokenizer.nextToken().toLowerCase();
-                    // Buscar la palabra en el diccionario y traducirla
-                    // if (dictionary.search(word)) {
-                    //     System.out.print(spanishTranslation + " ");
-                    // } else {
-                    //     System.out.print("*" + word + "* ");
-                    // }
+                    String translation = dictionary.search(word); // Buscar la palabra en el diccionario
+                    if (translation != null) {
+                        System.out.print(translation + " ");
+                    } else {
+                        System.out.print("*" + word + "* ");
+                    }
                 }
             }
         } catch (IOException e) {
