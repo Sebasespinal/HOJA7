@@ -1,7 +1,6 @@
 package Traductor;
 
-
-public class Association<K, V> {
+public class Association<K extends Comparable<K>, V> {
     private K key;
     private V value;
 
@@ -14,7 +13,15 @@ public class Association<K, V> {
         return key;
     }
 
+    public void setKey(K key) {
+        this.key = key;
+    }
+
     public V getValue() {
         return value;
+    }
+
+    public void setValue(V value) {
+        this.value = value;
     }
 }

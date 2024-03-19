@@ -1,6 +1,10 @@
-house, casa
-dog, perro
-homework, tarea
-woman, mujer
-town, pueblo
-yes, sí
+(the, el/la/los/las)
+(woman, mujer)
+(asked, preguntó)
+(me, me)
+(to, a)
+(do, hacer)
+(my, mi)
+(homework, tarea)
+(about, sobre)
+(town, pueblo)

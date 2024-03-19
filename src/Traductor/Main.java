@@ -16,7 +16,8 @@ public class Main {
                 StringTokenizer tokenizer = new StringTokenizer(line, ",()");
                 String englishWord = tokenizer.nextToken().trim();
                 String spanishWord = tokenizer.nextToken().trim();
-                dictionary.insert(englishWord); // Insertar la palabra en inglés en el árbol
+                Association<String, String> association = new Association<>(englishWord, spanishWord);
+                dictionary.insert(association);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -24,7 +25,7 @@ public class Main {
 
         // Recorrer el árbol en orden y mostrar la colección de palabras ordenadas por inglés
         System.out.print("Palabras ordenadas por inglés: ");
-        dictionary.inOrderTraversal(dictionary);
+        dictionary.inOrderTraversal();
         System.out.println(); // Agregar salto de línea después de imprimir las palabras ordenadas
 
         // Leer el archivo texto.txt y traducir cada palabra al español

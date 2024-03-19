@@ -11,60 +11,57 @@ public class BinaryTree<E extends Comparable<E>> {
         this.right = null;
     }
 
-    public E getData() {
-        return data;
-    }
-
-    public BinaryTree<E> getLeft() {
-        return left;
-    }
-
-    public BinaryTree<E> getRight() {
-        return right;
-    }
-
-    public void insert(E element) {
+    public void insert(Association<E, String> association) {
         if (data == null) {
-            data = element;
+            data = association.getKey();
         } else {
-            if (element.compareTo(data) < 0) {
+            E dataKey = data;
+            E associationKey = association.getKey();
+
+            int comparison = associationKey.compareTo(dataKey);
+            if (comparison < 0) {
                 if (left == null) {
-                    left = new BinaryTree<>(element);
-                } else {
-                    left.insert(element);
+                    left = new BinaryTree<>(association.getKey());
                 }
-            } else {
+                left.insert(association);
+            } else if (comparison > 0) {
                 if (right == null) {
-                    right = new BinaryTree<>(element);
-                } else {
-                    right.insert(element);
+                    right = new BinaryTree<>(association.getKey());
                 }
+                right.insert(association);
             }
         }
     }
 
-    public String search(E element) {
-        if (data == null || element == null) {
+    public String search(E key) {
+        if (data == null || key == null) {
             return null;
         }
 
-        int comparison = element.compareTo(data);
+        E dataKey = data;
+        E keyToSearch = key;
+
+        int comparison = keyToSearch.compareTo(dataKey);
         if (comparison == 0) {
             return data.toString();
         } else if (comparison < 0 && left != null) {
-            return left.search(element);
+            return left.search(key);
         } else if (comparison > 0 && right != null) {
-            return right.search(element);
+            return right.search(key);
         } else {
-            return "*" + element.toString() + "*"; // Devolver la palabra original en inglés encerrada entre asteriscos
+            return null;
         }
     }
 
-    public void inOrderTraversal(BinaryTree<E> node) {
-        if (node != null) {
-            inOrderTraversal(node.getLeft());
-            System.out.print(node.getData() + " ");
-            inOrderTraversal(node.getRight());
+    public void inOrderTraversal() {
+        if (left != null) {
+            left.inOrderTraversal();
+        }
+
+        System.out.print(data + " ");
+
+        if (right != null) {
+            right.inOrderTraversal();
         }
     }
-}	
+}
